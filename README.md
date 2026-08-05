@@ -2,7 +2,37 @@
 
 The Kasookoo SDK allows you to integrate high-quality voice calling (WebRTC & SIP) and real-time messaging into your own Android application.
 
-## 1. Installation
+---
+
+## 📖 Documentation
+- **[Quick Reference Handbook](SDK_HANDBOOK.txt)**: A comprehensive guide on SDK functionality, benefits, and usage scenarios.
+- **[UI Implementation Guide](README_VIEWS.md)**: Full source code for pre-built screens.
+
+---
+
+## 🚀 Quick Start Guide
+
+To get up and running with the Kasookoo SDK, follow these 4 steps:
+
+1.  **Installation**: Place the `.aar` and add dependencies.
+2.  **Setup**: Configure `AndroidManifest.xml` and initialize `KasookooConfig`.
+3.  **Authentication**: Login the user via `KasookooAuthManager`.
+4.  **Action**: Start a call or chat using `KasookooChatManager`.
+
+---
+
+## 📦 Core Components
+
+| Component | Description |
+| :--- | :--- |
+| **`KasookooAuthManager`** | Handles user login, permissions, and FCM registration. |
+| **`KasookooChatManager`** | Manages calls (P2P/SIP), messaging, and conversation history. |
+| **`LiveKitManager`** | The underlying engine for WebRTC audio/video sessions. |
+| **`KasookooConfig`** | Global configuration for activity routing and UI state. |
+
+---
+
+## 🛠 1. Installation
 
 ### Add SDK File
 1. Download the `sdk-release.aar` file.
@@ -48,7 +78,7 @@ A `google-services.json` file from your Firebase console is **required** to be p
 
 ---
 
-## 2. Manifest Requirements
+## 📜 2. Manifest Requirements
 
 ### Application Class
 You must declare your `Application` class in the `AndroidManifest.xml` so the system knows to use your custom initialization.
@@ -105,7 +135,7 @@ Register the SDK's internal services in your `AndroidManifest.xml`. These handle
 
 ---
 
-## 3. Initialization
+## ⚙️ 3. Initialization
 
 ### CallApplication.kt
 Create an `Application` class and initialize the SDK. You must tell the SDK which of your Activity classes should be opened when a call or chat starts.
@@ -132,7 +162,6 @@ class CallApplication : Application() {
     }
 
     private fun createNotificationChannel() {
-        // Create the notification channel required for Android 8.0+
         val channel = NotificationChannel("kasookoo_calls", "Calls", NotificationManager.IMPORTANCE_HIGH)
         val manager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         manager.createNotificationChannel(channel)
@@ -142,7 +171,7 @@ class CallApplication : Application() {
 
 ---
 
-## 4. Authentication Flow
+## 🔑 4. Authentication Flow
 
 ### KasookooAuthManager
 Use this class to handle the login process. It handles user identification and FCM device registration in one flow.
@@ -151,155 +180,84 @@ Use this class to handle the login process. It handles user identification and F
 val authManager = KasookooAuthManager(context, "YOUR_PUBLISHABLE_KEY")
 
 // Step 1: Request permissions (Microphone, Notifications, etc.)
-// This shows the system dialog to the user.
 authManager.requestPermissions(activity)
 
 // Step 2: Login the user by email
 authManager.loginAndInitialize("user@email.com", object : KasookooAuthManager.AuthCallback {
-    override fun onProgress(show: Boolean) {
-        // Use this to show or hide a loading spinner on your UI
-    }
+    override fun onProgress(show: Boolean) { /* Show/hide spinner */ }
 
     override fun onSuccess(user: UserModelData) {
         // User is now logged in and device is registered for push notifications.
-        // You can now navigate to your Main/Home screen.
     }
 
-    override fun onError(message: String) {
-        // Handle login failure (e.g., show a Toast with the error message)
-    }
+    override fun onError(message: String) { /* Handle error */ }
 })
 ```
 
 ---
 
-## 5. Voice Calling (WebRTC & SIP)
+## 📞 5. Voice Calling (WebRTC & SIP)
 
 ### KasookooChatManager
-Use this class to manage all calling and messaging operations.
+Use this class to manage all calling operations.
 
 #### Initiate a Peer-to-Peer Call
-Starts a call between two app users.
 ```kotlin
-val chatManager = KasookooChatManager(context)
-
 chatManager.initiateCall(targetUser, object : KasookooChatManager.CallCallback {
-    override fun onConnecting() {
-        // Show "Connecting..." UI
-    }
-
     override fun onSuccess(response: Any, roomName: String) {
-        // 1. Convert response to token model
         val res = response as CallerTokenResponse
-        // 2. Connect to the LiveKit room to start the audio session
         chatManager.connectToRoom(res.caller_token, res.ws_url, roomName)
-    }
-
-    override fun onError(message: String) {
-        // Show error message
     }
 })
 ```
 
 #### Make a Support (SIP) Call
-Calls a real phone number via SIP.
 ```kotlin
 chatManager.makeSupportCall("+123456789", object : KasookooChatManager.CallCallback {
     override fun onSuccess(response: Any, roomName: String) {
-        // For SIP calls, the response contains the 'access_token' and 'wsUrl' directly
         val res = response as SupportCallMakeResponse
         chatManager.connectToRoom(res.data.access_token, res.wsUrl, roomName)
     }
 })
 ```
 
-#### During a Call (Controls)
+#### Call Controls
 ```kotlin
-// Accept an incoming call (changes state to IN_CALL)
-chatManager.acceptCall()
-
-// Toggle microphone (returns the new state: true for muted, false for unmuted)
-val isMutedNow = chatManager.toggleMute(currentMuteState)
-
-// Toggle speakerphone (switches between earpiece and speaker)
-val isSpeakerOnNow = chatManager.toggleSpeaker()
-
-// End the call and disconnect from the server
-chatManager.endCall(isIncoming, roomName, participantId, callerId, calledId) {
-    // Callback: Close your Call Activity here
-    finish()
-}
+chatManager.acceptCall() // Accept incoming
+chatManager.toggleMute(isMuted) // Toggle mic
+chatManager.toggleSpeaker() // Toggle speakerphone
+chatManager.endCall(isIncoming, room, participant, caller, called) { finish() } // Hang up
 ```
 
 ---
 
-## 6. Messaging & Chat
-
-#### Fetching Conversations
-Get a list of all active chats for the current user.
-```kotlin
-chatManager.getConversations(object : KasookooChatManager.ListCallback<List<Conversation>> {
-    override fun onSuccess(data: List<Conversation>) {
-        // 'data' contains the list of active chats to show in your RecyclerView
-    }
-})
-```
+## 💬 6. Messaging & Chat
 
 #### Messaging Actions
 ```kotlin
-// Fetch message history for a specific chat ID
-chatManager.getChatMessages(conversationId, userId, callback)
-
-// Mark all messages in a chat as 'read'
-chatManager.markMessagesAsRead(conversationId, userId)
-
-// Send a plain text message to a LiveKit room
-chatManager.publishChatMessage(room, "Hello world!")
-
-// Send your current GPS coordinates to the other participant
-chatManager.publishLocation(room, latitude, longitude)
-
-// Save the message to the backend database so it appears in history
-chatManager.saveMessage("Hello world!", roomName, receiverId, userId) { success ->
-    // Message saved successfully
-}
+chatManager.getConversations(callback) // Fetch chat list
+chatManager.getChatMessages(id, userId, callback) // Fetch history
+chatManager.publishChatMessage(room, "Hello") // Send real-time message
+chatManager.saveMessage(text, room, receiver, sender) // Save to DB
 ```
 
-#### Real-time Chat Events
-Listen for incoming messages while you are on the chat screen.
+#### Real-time Events
 ```kotlin
 chatManager.observeChatEvents(room, object : KasookooChatManager.ChatEventCallback {
-    override fun onMessageReceived(message: MessageModel) {
-        // A new text message arrived. Add it to your chat list and scroll to bottom.
-    }
-
-    override fun onLocationReceived(lat: Double, lng: Double) {
-        // A location update arrived. Update your map or show a location bubble.
-    }
+    override fun onMessageReceived(message: MessageModel) { /* Update UI */ }
 })
 ```
 
 ---
 
-## 7. Utilities & Session
+## 🎨 7. Pre-built UI Components
+For a complete reference on how to implement the **Calling Screen**, **Chat Screen**, and **User Dashboard**, please refer to our **[UI Implementation Guide (README_VIEWS.md)](README_VIEWS.md)**.
 
-#### Updating UI Lists from Broadcasts
-If your app is open and an FCM message or local broadcast arrives, use these to update your local `conversationList` without refreshing the whole API.
+---
 
-```kotlin
-// Handle updates from Push Notifications
-conversationList = chatManager.handleFCMUpdate(intent, conversationList)
-
-// Handle updates from local broadcasts
-conversationList = chatManager.handleBroadCastUpdate(intent, conversationList)
-```
-
-#### Logout
-Revokes the session token and clears all local user data.
+## 🚪 8. Logout
 ```kotlin
 chatManager.logout { success ->
-    if (success) {
-        // Navigate the user back to the Login screen
-    }
+    if (success) { /* Navigate to Login */ }
 }
 ```

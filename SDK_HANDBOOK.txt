@@ -1,0 +1,72 @@
+KASOOKOO SDK: THE ULTIMATE COMMUNICATION SOLUTIONS HANDBOOK
+
+1. EXECUTIVE OVERVIEW
+The Kasookoo SDK is an enterprise-grade communication framework designed specifically for the Android ecosystem. It empowers developers and businesses to seamlessly embed crystal-clear voice calling and sophisticated real-time messaging into any mobile application. By bridging the gap between modern digital WebRTC protocols and traditional telephony infrastructure (SIP/PSTN), Kasookoo allows organizations to build truly global communication tools. Our mission is to eliminate the friction of building communication tech, allowing you to focus on your core business logic while we handle the massive complexity of server infrastructure, global telecom regulations, and real-time data synchronization.
+
+2. THE PROBLEM KASOOKOO SOLVES
+Building reliable communication features from scratch is notoriously difficult and resource-intensive. Developers typically face a wall of challenges:
+*   Network Volatility: Maintaining high call quality on unstable mobile networks (moving between Wi-Fi and Cellular).
+*   Protocol Complexity: Managing the intricate signaling required for WebRTC and the legacy requirements of SIP gateways.
+*   Battery & Background Restrictions: Ensuring the app wakes up for a call without draining the user's battery or being killed by Android's aggressive background limitations.
+*   Data Fragmentation: Keeping messaging history synced across multiple sessions and ensuring delivery status is accurate in real-time.
+*   Global Connectivity: The massive overhead of acquiring and managing international phone numbers and masking them for privacy.
+
+Kasookoo handles all of this "under the hood," providing a single, polished SDK that replaces months of engineering work with a few hours of integration.
+
+3. CORE FUNCTIONALITY & FEATURES
+
+A. High-Definition Voice Calling
+*   Peer-to-Peer (P2P) WebRTC: Direct app-to-app calling using state-of-the-art audio codecs (like Opus and G.722) for high-fidelity sound that outperforms traditional cellular calls.
+*   Global SIP/PSTN Integration: Reach any physical mobile number or landline in over 190 countries. This allows your app to act as a bridge between your digital users and the physical world.
+*   Intelligent Audio Management: The SDK includes advanced echo cancellation, noise suppression, and automatic gain control. It also intelligently handles audio routing between speakerphone, Bluetooth headsets, and the earpiece.
+*   Seamless Handover: Optimized to handle "network handovers"—if a user starts a call on Wi-Fi and walks out of range, the SDK works to maintain the connection over 4G/5G without dropping the call.
+
+B. Intelligent Real-Time Messaging
+*   Sub-Second Latency: Messages are delivered instantly using optimized WebSocket connections, ensuring a fluid conversation experience.
+*   Rich Media & Context: Built-in support for sharing GPS coordinates for live location tracking, alongside standard text messaging.
+*   Persistent & Synced History: All conversations are automatically archived in the Kasookoo cloud. When a user switches devices or re-installs the app, their entire history is instantly available.
+*   Smart Status Tracking: Real-time feedback for "Sending," "Delivered," and "Read" statuses, giving users confidence in their communication.
+*   Typing Indicators: (Optional/Future) Visual feedback that the other party is active, increasing user engagement.
+
+C. Background Signaling & Notifications
+*   "Always Reachable" Architecture: Using specialized Firebase high-priority signaling, Kasookoo can wake an app from a "killed" or "doze" state to present an incoming call.
+*   Full-Screen Incoming Call UI: The SDK provides native-feeling call alerts that appear even over the lock screen, ensuring users never miss important calls.
+*   Actionable Notifications: Accept or decline calls directly from the notification tray without even opening the app.
+
+4. KEY BUSINESS BENEFITS
+
+For Your Organization
+*   Drastic Reduction in Time-to-Market: Launch a fully-featured communication app in days rather than months.
+*   Zero Infrastructure Overhead: No need to manage STUN/TURN servers, SIP trunks, or massive databases. We scale automatically as you grow.
+*   Cost Efficiency: Reduce operational costs by using P2P calling for internal communication and our competitive wholesale rates for PSTN calling.
+*   Enterprise-Grade Security: End-to-end encryption for signaling and secure data storage ensures your organization remains compliant with modern privacy standards.
+
+For Your End Users
+*   Crystal Clear Audio Quality: No more robotic voices, lag, or dropped connections.
+*   Global Accessibility: The ability to call anyone, anywhere, even if they don't have the app or an internet connection.
+*   Privacy First (Number Masking): Protect user privacy by allowing buyers/sellers or customers/agents to call each other without ever seeing each other’s private phone numbers.
+
+5. PRIMARY USAGE SCENARIOS & CASE STUDIES
+
+*   Customer Support & Telemedicine: Embed a "Call Specialist" button directly in your app. Patients or customers connect for free to your agents, improving satisfaction and drastically reducing toll-free carrier costs.
+*   E-Commerce & Service Marketplaces: Allow buyers and sellers to negotiate via chat and call. Kasookoo acts as the privacy shield, keeping personal data safe while facilitating the sale.
+*   Social & Community Engagement: Move users from static text posts to high-quality voice interactions with a single tap, increasing "time-spent-in-app."
+*   Logistics, Delivery & Ride-Hailing: Enable drivers and customers to coordinate in real-time. Include location sharing so customers can see exactly where their delivery agent is on a map.
+*   Corporate Communication: Build a private, secure internal calling app for your employees that works across the globe without relying on expensive cellular roaming.
+
+6. USER EXPERIENCE & INTERFACE
+The Kasookoo SDK follows a "Logic-First" philosophy. We provide the "brain" (the calling and messaging engine), and you provide the "face."
+*   Fully Customizable: While we offer robust pre-built screens to get you started, you have total control to change colors, fonts, layouts, and animations to match your brand identity.
+*   Native Integration: The SDK components are designed to look and feel like part of the Android OS, providing a familiar and frictionless experience for the user.
+
+7. SECURITY & RELIABILITY
+*   Encryption: All signaling and message data are transmitted over encrypted channels (TLS/WSS).
+*   Global Availability: Our server infrastructure is distributed across multiple regions to ensure low latency and high availability, regardless of where your users are located.
+*   Compliance Ready: Designed with privacy-by-design principles to help your application meet GDPR and other international data protection requirements.
+
+8. CONCLUSION
+The Kasookoo SDK is more than just a library; it is a comprehensive communication partner. By handling the immense technical and regulatory challenges of global communication, we allow you to focus on what matters most: building a great product and serving your users.
+
+---
+(c) 2024 Kasookoo Communication Systems. All rights reserved.
+For technical integration steps, please refer to the README.md file in the project root.
