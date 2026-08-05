@@ -4,26 +4,16 @@ The Kasookoo SDK allows you to integrate high-quality voice calling (WebRTC & SI
 
 ## 1. Installation
 
-### Add Repository
-Add the JitPack repository to your `settings.gradle.kts` or project-level `build.gradle.kts`:
-
-```kotlin
-dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
-    repositories {
-        google()
-        mavenCentral()
-        maven { url = uri("https://jitpack.io") }
-    }
-}
-```
+### Add SDK File
+1. Download the `sdk-release.aar` file.
+2. Place the `.aar` file in your app's `libs/` directory (create it if it doesn't exist: `app/libs/`).
 
 ### Add Dependency
 In your app-level `build.gradle.kts`, add the Kasookoo SDK dependency:
 
 ```kotlin
 dependencies {
-    implementation("com.github.Kasookoo:kasookoo-sdk-kotlin:1.0.0")
+    implementation(files("libs/sdk-release.aar"))
 }
 ```
 
