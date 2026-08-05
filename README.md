@@ -234,6 +234,30 @@ chatManager.endCall(isIncoming, room, participant, caller, called) { finish() } 
 ## 💬 6. Messaging & Chat
 
 #### Messaging Actions
+
+**Fetch User List**
+Fetches a list of all users available for communication.
+```kotlin
+chatManager.getUsers(object : KasookooChatManager.ListCallback<List<UserModelData>> {
+    override fun onProgress(show: Boolean) { 
+        // Called when loading starts (true) or ends (false)
+    }
+    
+    override fun onSuccess(data: List<UserModelData>) {
+        // Successfully fetched users. 'data' is a list of UserModelData objects.
+    }
+    
+    override fun onError(message: String) { 
+        // An error occurred (e.g., network failure). 'message' contains the reason.
+    }
+    
+    override fun onLogout() { 
+        // Called if the user's session has expired and they need to re-authenticate.
+    }
+})
+```
+
+**Conversation & History**
 ```kotlin
 chatManager.getConversations(callback) // Fetch chat list
 chatManager.getChatMessages(id, userId, callback) // Fetch history
